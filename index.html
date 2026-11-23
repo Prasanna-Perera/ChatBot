@@ -67,6 +67,17 @@
                 </div>
             </header>
 
+            <div class="px-3 px-md-4 py-2 border-bottom" id="apiKeyBar" style="display: none; background-color: var(--qb-surface-2);">
+                <div class="qb-chat-inner mx-auto w-100 d-flex align-items-center gap-2">
+                    <input type="password" id="txtRuntimeApiKey" class="form-control form-control-sm" placeholder="Paste Gemini API Key here...">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="saveRuntimeApiKey()">Apply</button>
+                </div>
+            </div>
+
+            <div class="qb-chat-scroll flex-grow-1 overflow-auto px-3 px-md-4 py-4 d-flex flex-column justify-content-end" id="chatBox">
+                <div class="qb-chat-inner mx-auto w-100" id="chatWrapper"></div>
+            </div>
+
             
 
     <script src="https://cdn.jsdelivr.net/npm/marked@4.0.10/marked.min.js"></script>
