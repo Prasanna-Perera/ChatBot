@@ -56,4 +56,10 @@ body {
     align-items: center;
     justify-content: center;
 }
+.qb-new-chat-btn {
+    background-color: var(--qb-sidebar-hover);
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+}
 
