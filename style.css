@@ -46,4 +46,14 @@ body {
     color: #f8fafc;
     border-right: 1px solid rgba(255, 255, 255, 0.06);
 }
+.qb-logo-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #10b981);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 
