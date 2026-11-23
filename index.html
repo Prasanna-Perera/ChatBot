@@ -78,6 +78,21 @@
                 <div class="qb-chat-inner mx-auto w-100" id="chatWrapper"></div>
             </div>
 
+            <div class="qb-attachment-bar px-3 px-md-4" id="imagePreviewBar" style="display: none;">
+                <div class="qb-chat-inner mx-auto w-100">
+                    <div class="qb-preview-card d-inline-flex align-items-center gap-3 p-2 rounded-3 mb-2">
+                        <img id="selectedImageThumb" src="" alt="Selected preview" class="qb-thumb rounded-2">
+                        <div class="small">
+                            <div class="fw-semibold" id="selectedImageName">photo.png</div>
+                            <div class="qb-muted">Type a clean/edit prompt and press Send</div>
+                        </div>
+                        <button type="button" class="btn btn-sm text-danger ms-2" onclick="clearSelectedImage()" title="Remove Image">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             
 
     <script src="https://cdn.jsdelivr.net/npm/marked@4.0.10/marked.min.js"></script>
