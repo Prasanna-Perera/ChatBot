@@ -93,7 +93,26 @@
                 </div>
             </div>
 
-            
+            <footer class="qb-footer px-3 px-md-4 pb-3 pt-2">
+                <div class="qb-chat-inner mx-auto w-100">
+                    <div class="qb-input-dock d-flex align-items-center gap-2 rounded-4 px-3 py-2">
+                        <input type="file" id="imageFileInput" accept="image/*" hidden onchange="handleImageSelect(event)">
+                        <button type="button" class="btn qb-attach-btn rounded-circle p-0 d-flex align-items-center justify-content-center" onclick="document.getElementById('imageFileInput').click()" title="Upload Photo to Clean / Edit">
+                            <i class="fa-regular fa-image"></i>
+                        </button>
+                        <input type="text" id="txtUserInput" class="form-control border-0 bg-transparent shadow-none" placeholder="Ask QuickBot or describe how to clean/edit your photo..." autocomplete="off">
+                        <button type="button" id="btnSend" class="btn qb-send-btn rounded-circle p-0 d-flex align-items-center justify-content-center" onclick="btnSendMessageOnAction()" title="Send">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="text-center qb-disclaimer mt-2">
+                        QuickBot • Temporary live session • Photo cleaning/editing enabled
+                    </div>
+                </div>
+            </footer>
+
+        </main>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked@4.0.10/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.17/dist/purify.min.js"></script>
