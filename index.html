@@ -10,7 +10,43 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
 
+<body class="dark-mode">
 
+    <div class="qb-app d-flex vh-100 overflow-hidden w-100">
+
+        <aside class="qb-sidebar d-none d-md-flex flex-column justify-content-between p-3">
+            <div>
+                <div class="qb-brand d-flex align-items-center justify-content-between mb-3 px-1">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="qb-logo-badge"><i class="fa-solid fa-bolt"></i></span>
+                        <span class="fw-bold fs-5">QuickBot</span>
+                    </div>
+                    <button type="button" class="btn btn-sm qb-icon-btn" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fa-solid fa-sun" id="themeIcon"></i>
+                    </button>
+                </div>
+
+                <button type="button" class="btn qb-new-chat-btn w-100 mb-3 py-2 px-3 rounded-3 d-flex align-items-center justify-content-between" onclick="createNewChat()">
+                    <span><i class="fa-solid fa-plus me-2"></i>New Chat</span>
+                    <kbd class="qb-kbd">Reset</kbd>
+                </button>
+
+                <div class="small text-uppercase fw-semibold qb-section-label px-2 mb-2">Session</div>
+                <div class="qb-session-box p-3 rounded-3 small">
+                    <div class="fw-semibold mb-1"><i class="fa-regular fa-circle-dot text-success me-2"></i>Live Session</div>
+                    <div class="qb-muted">Temporary run mode</div>
+                </div>
+            </div>
+
+            <div class="qb-sidebar-footer pt-3 mt-2 border-top d-flex align-items-center justify-content-between px-1">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="qb-avatar-sm rounded-circle d-flex align-items-center justify-content-center fw-bold">Q</div>
+                    <div class="small fw-semibold">Quick User</div>
+                </div>
+            </div>
+        </aside>
+
+        
 </body>
 
 </html>
