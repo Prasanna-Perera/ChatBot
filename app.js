@@ -15,3 +15,9 @@ function getActiveApiKey() {
     }
     return "";
 }
+
+function toggleApiKeyBox() {
+    const bar = document.getElementById("apiKeyBar");
+    if (!bar) return;
+    bar.style.display = bar.style.display === "none" ? "block" : "none";
+}
