@@ -175,4 +175,8 @@ body {
     background-color: var(--qb-accent);
     color: #fff;
 }
+.qb-msg-avatar.user {
+    background-color: var(--qb-user-bubble);
+    color: var(--qb-user-text);
+}
 
