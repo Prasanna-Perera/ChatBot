@@ -104,4 +104,7 @@ body {
     opacity: 0.7;
     padding: 2px 6px;
 }
+.qb-delete-chat-btn:hover {
+    opacity: 1;
+}
 
