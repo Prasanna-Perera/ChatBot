@@ -262,3 +262,8 @@ function toggleTheme() {
     updateThemeIcons();
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    updateThemeIcons();
+    createNewChat();
+
+
