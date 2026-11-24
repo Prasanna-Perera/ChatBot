@@ -195,4 +195,15 @@ async function btnSendMessageOnAction() {
                 responseModalities: ["TEXT", "IMAGE"]
             };
         }
+const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-goog-api-key": apiKey
+            },
+            body: JSON.stringify(bodyPayload)
+        });
+
+        const data = await response.json();
+        messages.pop();
 
