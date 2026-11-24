@@ -207,4 +207,10 @@ body {
     margin-top: 8px;
     border: 1px solid var(--qb-border);
 }
+.qb-download-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.82rem;
+    text-decoration: none;
+}
 
