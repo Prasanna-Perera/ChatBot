@@ -117,4 +117,7 @@ body {
 .qb-sidebar-footer {
     border-color: rgba(255, 255, 255, 0.08) !important;
 }
+.qb-main {
+    background-color: var(--qb-bg);
+}
 
