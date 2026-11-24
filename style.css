@@ -262,4 +262,7 @@ body {
     color: #fff;
     border: none;
 }
+.qb-send-btn:disabled {
+    opacity: 0.5;
+}
 
