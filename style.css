@@ -90,4 +90,7 @@ body {
     margin-bottom: 6px;
     transition: background-color 0.2s ease;
 }
+.qb-history-item:hover {
+    background-color: var(--qb-sidebar-hover);
+}
 
