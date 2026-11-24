@@ -1,14 +1,34 @@
-const STORAGE_KEY = "quickbot_saved_chats_v1";
-const THEME_KEY = "quickbot_theme_v1";
-
-// Chat සඳහා model එක සහ Photo Clean/Edit සඳහා image-capable Gemini model එක
 const TEXT_MODEL = "gemini-2.5-flash";
-const IMAGE_EDIT_MODEL = "gemini-2.5-flash-image"; // ඔබේ API key එකට support කරන Gemini image model එක
+const IMAGE_EDIT_MODEL = "gemini-2.5-flash-image";
 
-let chats = [];
-let activeChatId = null;
-let selectedImage = null; // { base64, mimeType, dataUrl, name }
+let messages = [];
+let selectedImage = null;
 let isBusy = false;
+let runtimeApiKey = "";
+
+function getActiveApiKey() {
+    if (runtimeApiKey && runtimeApiKey.trim() !== "") {
+        return runtimeApiKey.trim();
+    }
+    if (window.CONFIG && CONFIG.API_KEY && CONFIG.API_KEY.trim() !== "") {
+        return CONFIG.API_KEY.trim();
+    }
+    return "";
+}
+
+function toggleApiKeyBox() {
+    const bar = document.getElementById("apiKeyBar");
+    if (!bar) return;
+    bar.style.display = bar.style.display === "none" ? "block" : "none";
+}
+
+function saveRuntimeApiKey() {
+    const input = document.getElementById("txtRuntimeApiKey");
+    if (!input) return;
+    runtimeApiKey = input.value.trim();
+    const bar = document.getElementById("apiKeyBar");
+    if (bar) bar.style.display = "none";
+}
 
 function escapeHTML(str = "") {
     const div = document.createElement("div");
@@ -16,85 +36,19 @@ function escapeHTML(str = "") {
     return div.innerHTML;
 }
 
-function loadChats() {
-    try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        chats = raw ? JSON.parse(raw) : [];
-    } catch {
-        chats = [];
-    }
-
-    if (!Array.isArray(chats) || chats.length === 0) {
-        const fresh = createNewChatObject();
-        chats = [fresh];
-    }
-
-    activeChatId = chats[0].id;
-    saveChats();
-}
-
-function saveChats() {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(chats));
-    } catch (e) {
-        console.warn("Storage full or blocked:", e);
-    }
-}
-
-function createNewChatObject() {
+function getWelcomeMessage() {
     return {
-        id: "chat_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
-        title: "New Chat",
-        updatedAt: Date.now(),
-        messages: [
-            {
-                role: "bot",
-                text: "ආයුබෝවන්! මම **QuickBot**. ඔයාට අහන්න ඕනේ දෙයක් අහන්න හෝ photo එකක් upload කරලා clean / edit කරගන්න.",
-                imageUrl: null
-            }
-        ]
+        role: "bot",
+        text: "Hello! I'm **QuickChatBot**. Ask me anything or upload a photo to clean or edit it.",
+        imageUrl: null
     };
 }
 
-function getActiveChat() {
-    return chats.find((c) => c.id === activeChatId) || chats[0];
-}
-
 function createNewChat() {
-    const newChat = createNewChatObject();
-    chats.unshift(newChat);
-    activeChatId = newChat.id;
+    messages = [getWelcomeMessage()];
     clearSelectedImage();
-    saveChats();
-    renderAll();
+    renderMessages();
     document.getElementById("txtUserInput")?.focus();
-}
-
-function selectChat(chatId) {
-    activeChatId = chatId;
-    clearSelectedImage();
-    renderAll();
-}
-
-function deleteChat(event, chatId) {
-    event.stopPropagation();
-    chats = chats.filter((c) => c.id !== chatId);
-    if (chats.length === 0) {
-        chats = [createNewChatObject()];
-    }
-    if (activeChatId === chatId) {
-        activeChatId = chats[0].id;
-    }
-    saveChats();
-    renderAll();
-}
-
-function clearAllChats() {
-    chats = [createNewChatObject()];
-    activeChatId = chats[0].id;
-    clearSelectedImage();
-    saveChats();
-    renderAll();
 }
 
 function handleImageSelect(event) {
@@ -127,39 +81,16 @@ function clearSelectedImage() {
     if (bar) bar.style.display = "none";
 }
 
-function renderHistory() {
-    const listEl = document.getElementById("chatHistoryList");
-    if (!listEl) return;
-
-    listEl.innerHTML = chats
-        .map((chat) => {
-            const activeClass = chat.id === activeChatId ? "active" : "";
-            return `
-                <div class="qb-history-item ${activeClass}" onclick="selectChat('${chat.id}')">
-                    <span class="text-truncate"><i class="fa-regular fa-message me-2"></i>${escapeHTML(chat.title)}</span>
-                    <button type="button" class="qb-delete-chat-btn" onclick="deleteChat(event, '${chat.id}')" title="Delete">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-            `;
-        })
-        .join("");
-}
-
 function formatBotText(text = "") {
     const raw = typeof marked !== "undefined" ? marked.parse(text) : escapeHTML(text).replace(/\n/g, "<br>");
     return typeof DOMPurify !== "undefined" ? DOMPurify.sanitize(raw) : raw;
 }
 
 function renderMessages() {
-    const chat = getActiveChat();
     const wrapper = document.getElementById("chatWrapper");
-    const titleEl = document.getElementById("currentChatTitle");
-    if (!chat || !wrapper) return;
+    if (!wrapper) return;
 
-    if (titleEl) titleEl.textContent = chat.title;
-
-    wrapper.innerHTML = chat.messages
+    wrapper.innerHTML = messages
         .map((msg) => {
             const isUser = msg.role === "user";
             const avatarIcon = isUser ? `<i class="fa-solid fa-user"></i>` : `<i class="fa-solid fa-bolt"></i>`;
@@ -170,7 +101,7 @@ function renderMessages() {
             const imgHtml = msg.imageUrl
                 ? `
                     <img src="${msg.imageUrl}" alt="Chat photo" class="qb-chat-img">
-                    ${!isUser ? `<a href="${msg.imageUrl}" download="quickbot-edited.png" class="btn btn-sm btn-outline-primary qb-download-link"><i class="fa-solid fa-download me-1"></i>Download Photo</a>` : ""}
+                    ${!isUser ? `<a href="${msg.imageUrl}" download="quickchatbot-edited.png" class="btn btn-sm btn-outline-primary qb-download-link"><i class="fa-solid fa-download me-1"></i>Download Photo</a>` : ""}
                   `
                 : "";
 
@@ -188,11 +119,6 @@ function renderMessages() {
         .join("");
 
     scrollToBottom();
-}
-
-function renderAll() {
-    renderHistory();
-    renderMessages();
 }
 
 function scrollToBottom() {
@@ -213,22 +139,18 @@ async function btnSendMessageOnAction() {
 
     if (!promptText && !selectedImage) return;
 
-    if (!window.CONFIG || !CONFIG.API_KEY || CONFIG.API_KEY === "api key methana danna" || CONFIG.API_KEY.trim() === "") {
-        alert("කරුණාකර config.js file එකේ ඔයාගේ API_KEY එක දාන්න.");
+    const apiKey = getActiveApiKey();
+    if (!apiKey) {
+        const bar = document.getElementById("apiKeyBar");
+        if (bar) bar.style.display = "block";
+        document.getElementById("txtRuntimeApiKey")?.focus();
         return;
     }
 
-    const chat = getActiveChat();
     const attachedImg = selectedImage;
     const finalPrompt = promptText || "Clean and enhance this photo neatly.";
 
-    if (chat.title === "New Chat" && promptText) {
-        chat.title = promptText.slice(0, 28);
-    } else if (chat.title === "New Chat" && attachedImg) {
-        chat.title = "Photo Edit";
-    }
-
-    chat.messages.push({
+    messages.push({
         role: "user",
         text: promptText || `[Photo Attached: ${attachedImg.name}]`,
         imageUrl: attachedImg ? attachedImg.dataUrl : null
@@ -236,18 +158,16 @@ async function btnSendMessageOnAction() {
 
     inputEl.value = "";
     clearSelectedImage();
-    saveChats();
-    renderAll();
+    renderMessages();
 
     isBusy = true;
     if (sendBtn) sendBtn.disabled = true;
 
-    const tempThinkingMsg = {
+    messages.push({
         role: "bot",
-        text: attachedImg ? "Photo එක clean/edit කරමින් පවතී..." : "QuickBot සිතමින් පවතී...",
+        text: attachedImg ? "Cleaning/editing your photo..." : "QuickChatBot is thinking...",
         imageUrl: null
-    };
-    chat.messages.push(tempThinkingMsg);
+    });
     renderMessages();
 
     try {
@@ -280,13 +200,13 @@ async function btnSendMessageOnAction() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "x-goog-api-key": CONFIG.API_KEY
+                "x-goog-api-key": apiKey
             },
             body: JSON.stringify(bodyPayload)
         });
 
         const data = await response.json();
-        chat.messages.pop(); // remove thinking placeholder
+        messages.pop();
 
         if (!response.ok) {
             throw new Error(data?.error?.message || `HTTP ${response.status}`);
@@ -306,26 +226,23 @@ async function btnSendMessageOnAction() {
         }
 
         if (!replyText && !editedImageUrl) {
-            replyText = "ප්‍රතිචාරයක් ලැබුණේ නැහැ. වෙනත් prompt එකක් උත්සාහ කරන්න.";
+            replyText = "No response received. Please try another prompt.";
         }
 
-        chat.messages.push({
+        messages.push({
             role: "bot",
-            text: replyText || "ඔබගේ photo එක සකස් කරන ලදී:",
+            text: replyText || "Here is your edited photo:",
             imageUrl: editedImageUrl
         });
-        chat.updatedAt = Date.now();
-        saveChats();
-        renderAll();
+        renderMessages();
     } catch (err) {
-        chat.messages.pop();
-        chat.messages.push({
+        messages.pop();
+        messages.push({
             role: "bot",
             text: `**Error:** ${err.message}`,
             imageUrl: null
         });
-        saveChats();
-        renderAll();
+        renderMessages();
     } finally {
         isBusy = false;
         if (sendBtn) sendBtn.disabled = false;
@@ -333,31 +250,24 @@ async function btnSendMessageOnAction() {
     }
 }
 
-function applyTheme(theme) {
-    const isDark = theme === "dark";
-    document.body.classList.toggle("dark-mode", isDark);
+function updateThemeIcons() {
+    const isDark = document.body.classList.contains("dark-mode");
     const iconClass = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
 
     const dIcon = document.getElementById("themeIcon");
     const mIcon = document.getElementById("mobileThemeIcon");
     if (dIcon) dIcon.className = iconClass;
     if (mIcon) mIcon.className = iconClass;
-
-    try {
-        localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
-    } catch {}
 }
 
 function toggleTheme() {
-    const nextTheme = document.body.classList.contains("dark-mode") ? "light" : "dark";
-    applyTheme(nextTheme);
+    document.body.classList.toggle("dark-mode");
+    updateThemeIcons();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const savedTheme = localStorage.getItem(THEME_KEY) || "dark";
-    applyTheme(savedTheme);
-    loadChats();
-    renderAll();
+    updateThemeIcons();
+    createNewChat();
 
     const inputEl = document.getElementById("txtUserInput");
     if (inputEl) {
