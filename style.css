@@ -222,4 +222,8 @@ body {
     height: 48px;
     object-fit: cover;
 }
+.qb-muted {
+    color: var(--qb-muted);
+    font-size: 0.78rem;
+}
 
