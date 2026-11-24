@@ -131,6 +131,9 @@ function scrollToBottom() {
     }
 }
 
+async function btnSendMessageOnAction() {
+    if (isBusy) return;
+
     const inputEl = document.getElementById("txtUserInput");
     const sendBtn = document.getElementById("btnSend");
     const promptText = inputEl.value.trim();
