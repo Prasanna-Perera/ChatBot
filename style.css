@@ -213,4 +213,8 @@ body {
     font-size: 0.82rem;
     text-decoration: none;
 }
+.qb-preview-card {
+    background-color: var(--qb-surface);
+    border: 1px solid var(--qb-border);
+}
 
