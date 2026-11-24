@@ -246,4 +246,12 @@ body {
 #txtUserInput::placeholder {
     color: var(--qb-muted);
 }
+.qb-attach-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background-color: var(--qb-surface-2);
+    color: var(--qb-text);
+    border: none;
+}
 
