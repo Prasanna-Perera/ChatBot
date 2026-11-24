@@ -226,4 +226,7 @@ body {
     color: var(--qb-muted);
     font-size: 0.78rem;
 }
+.qb-footer {
+    background-color: var(--qb-bg);
+}
 
