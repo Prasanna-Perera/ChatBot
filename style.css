@@ -171,4 +171,8 @@ body {
     flex-shrink: 0;
     font-size: 0.9rem;
 }
+.qb-msg-avatar.bot {
+    background-color: var(--qb-accent);
+    color: #fff;
+}
 
