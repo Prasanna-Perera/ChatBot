@@ -137,4 +137,9 @@ body {
     border: 1px solid var(--qb-border);
     font-weight: 500;
 }
+.qb-icon-btn {
+    color: var(--qb-muted);
+    border: 1px solid var(--qb-border);
+    border-radius: 10px;
+}
 
