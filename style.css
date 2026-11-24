@@ -66,4 +66,11 @@ body {
     background-color: #24324a;
     color: #fff;
 }
+.qb-kbd {
+    font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 6px;
+    border-radius: 6px;
+    color: #cbd5e1;
+}
 
