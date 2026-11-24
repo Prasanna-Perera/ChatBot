@@ -229,4 +229,9 @@ body {
 .qb-footer {
     background-color: var(--qb-bg);
 }
+.qb-input-dock {
+    background-color: var(--qb-surface);
+    border: 1px solid var(--qb-border);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
 
