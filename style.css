@@ -146,4 +146,7 @@ body {
     color: #e2e8f0;
     border-color: rgba(255, 255, 255, 0.12);
 }
+.qb-chat-inner {
+    max-width: 820px;
+}
 
