@@ -144,3 +144,12 @@ function scrollToBottom() {
         document.getElementById("txtRuntimeApiKey")?.focus();
         return;
     }
+
+    const attachedImg = selectedImage;
+    const finalPrompt = promptText || "Clean and enhance this photo neatly.";
+
+    messages.push({
+        role: "user",
+        text: promptText || `[Photo Attached: ${attachedImg.name}]`,
+        imageUrl: attachedImg ? attachedImg.dataUrl : null
+    });
