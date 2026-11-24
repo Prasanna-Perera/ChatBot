@@ -124,4 +124,11 @@ body {
     background-color: var(--qb-surface);
     border-color: var(--qb-border) !important;
 }
+.qb-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--qb-accent);
+    display: inline-block;
+}
 
