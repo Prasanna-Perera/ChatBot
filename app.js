@@ -72,3 +72,17 @@ function handleImageSelect(event) {
     };
     reader.readAsDataURL(file);
 }
+
+function clearSelectedImage() {
+    selectedImage = null;
+    const input = document.getElementById("imageFileInput");
+    if (input) input.value = "";
+    const bar = document.getElementById("imagePreviewBar");
+    if (bar) bar.style.display = "none";
+}
+
+function formatBotText(text = "") {
+    const raw = typeof marked !== "undefined" ? marked.parse(text) : escapeHTML(text).replace(/\n/g, "<br>");
+    return typeof DOMPurify !== "undefined" ? DOMPurify.sanitize(raw) : raw;
+}
+
