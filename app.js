@@ -169,3 +169,21 @@ async function btnSendMessageOnAction() {
         text: attachedImg ? "Cleaning/editing your photo..." : "QuickChatBot is thinking...",
         imageUrl: null
     });
+    renderMessages();
+
+    try {
+        const isImageTask = Boolean(attachedImg);
+        const modelToUse = isImageTask ? IMAGE_EDIT_MODEL : TEXT_MODEL;
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelToUse}:generateContent`;
+
+        const parts = [];
+        if (attachedImg) {
+            parts.push({
+                inlineData: {
+                    mimeType: attachedImg.mimeType,
+                    data: attachedImg.base64
+                }
+            });
+        }
+        parts.push({ text: finalPrompt });
+
