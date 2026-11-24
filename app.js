@@ -21,3 +21,11 @@ function toggleApiKeyBox() {
     if (!bar) return;
     bar.style.display = bar.style.display === "none" ? "block" : "none";
 }
+
+function saveRuntimeApiKey() {
+    const input = document.getElementById("txtRuntimeApiKey");
+    if (!input) return;
+    runtimeApiKey = input.value.trim();
+    const bar = document.getElementById("apiKeyBar");
+    if (bar) bar.style.display = "none";
+}
