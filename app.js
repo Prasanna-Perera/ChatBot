@@ -206,4 +206,20 @@ const response = await fetch(endpoint, {
 
         const data = await response.json();
         messages.pop();
+if (!response.ok) {
+            throw new Error(data?.error?.message || `HTTP ${response.status}`);
+        }
+
+        const responseParts = data?.candidates?.[0]?.content?.parts || [];
+        let replyText = "";
+        let editedImageUrl = null;
+
+        for (const p of responseParts) {
+            if (p.text) replyText += p.text;
+            const inline = p.inlineData || p.inline_data;
+            if (inline && inline.data) {
+                const mime = inline.mimeType || inline.mime_type || "image/png";
+                editedImageUrl = `data:${mime};base64,${inline.data}`;
+            }
+        }
 
