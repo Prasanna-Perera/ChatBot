@@ -237,4 +237,7 @@ body {
 .qb-input-dock:focus-within {
     border-color: var(--qb-sidebar-active);
 }
+#txtUserInput {
+    color: var(--qb-text);
+}
 
