@@ -231,4 +231,19 @@ if (!response.ok) {
             text: replyText || "Here is your edited photo:",
             imageUrl: editedImageUrl
         });
+        renderMessages();
+    } catch (err) {
+        messages.pop();
+        messages.push({
+            role: "bot",
+            text: `**Error:** ${err.message}`,
+            imageUrl: null
+        });
+        renderMessages();
+    } finally {
+        isBusy = false;
+        if (sendBtn) sendBtn.disabled = false;
+        inputEl.focus();
+    }
+}
 
