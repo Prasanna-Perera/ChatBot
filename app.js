@@ -247,3 +247,13 @@ if (!response.ok) {
     }
 }
 
+function updateThemeIcons() {
+    const isDark = document.body.classList.contains("dark-mode");
+    const iconClass = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+
+    const dIcon = document.getElementById("themeIcon");
+    const mIcon = document.getElementById("mobileThemeIcon");
+    if (dIcon) dIcon.className = iconClass;
+    if (mIcon) mIcon.className = iconClass;
+}
+
