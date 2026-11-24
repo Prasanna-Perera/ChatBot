@@ -161,4 +161,14 @@ body {
 .qb-msg-row.user {
     justify-content: flex-end;
 }
+.qb-msg-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+}
 
