@@ -156,3 +156,16 @@ async function btnSendMessageOnAction() {
         text: promptText || `[Photo Attached: ${attachedImg.name}]`,
         imageUrl: attachedImg ? attachedImg.dataUrl : null
     });
+
+        inputEl.value = "";
+    clearSelectedImage();
+    renderMessages();
+
+    isBusy = true;
+    if (sendBtn) sendBtn.disabled = true;
+
+    messages.push({
+        role: "bot",
+        text: attachedImg ? "Cleaning/editing your photo..." : "QuickChatBot is thinking...",
+        imageUrl: null
+    });
