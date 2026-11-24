@@ -234,4 +234,7 @@ body {
     border: 1px solid var(--qb-border);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
+.qb-input-dock:focus-within {
+    border-color: var(--qb-sidebar-active);
+}
 
