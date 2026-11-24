@@ -254,4 +254,12 @@ body {
     color: var(--qb-text);
     border: none;
 }
+.qb-send-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background-color: var(--qb-sidebar-active);
+    color: #fff;
+    border: none;
+}
 
