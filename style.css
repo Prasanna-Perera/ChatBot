@@ -188,4 +188,9 @@ body {
     word-break: break-word;
     border: 1px solid var(--qb-border);
 }
+.qb-bubble.bot {
+    background-color: var(--qb-bot-bubble);
+    color: var(--qb-text);
+    border-bottom-left-radius: 4px;
+}
 
