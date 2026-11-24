@@ -62,4 +62,8 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     font-weight: 500;
 }
+.qb-new-chat-btn:hover {
+    background-color: #24324a;
+    color: #fff;
+}
 
