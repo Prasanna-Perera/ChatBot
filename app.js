@@ -86,3 +86,38 @@ function formatBotText(text = "") {
     return typeof DOMPurify !== "undefined" ? DOMPurify.sanitize(raw) : raw;
 }
 
+
+function renderMessages() {
+    const wrapper = document.getElementById("chatWrapper");
+    if (!wrapper) return;
+
+    wrapper.innerHTML = messages
+        .map((msg) => {
+            const isUser = msg.role === "user";
+            const avatarIcon = isUser ? `<i class="fa-solid fa-user"></i>` : `<i class="fa-solid fa-bolt"></i>`;
+            const bodyContent = isUser
+                ? `<div>${escapeHTML(msg.text || "")}</div>`
+                : `<div class="qb-markdown">${formatBotText(msg.text || "")}</div>`;
+
+            const imgHtml = msg.imageUrl
+                ? `
+                    <img src="${msg.imageUrl}" alt="Chat photo" class="qb-chat-img">
+                    ${!isUser ? `<a href="${msg.imageUrl}" download="quickchatbot-edited.png" class="btn btn-sm btn-outline-primary qb-download-link"><i class="fa-solid fa-download me-1"></i>Download Photo</a>` : ""}
+                  `
+                : "";
+
+            return `
+                <div class="qb-msg-row ${isUser ? "user" : "bot"}">
+                    ${!isUser ? `<div class="qb-msg-avatar bot">${avatarIcon}</div>` : ""}
+                    <div class="qb-bubble ${isUser ? "user" : "bot"}">
+                        ${bodyContent}
+                        ${imgHtml}
+                    </div>
+                    ${isUser ? `<div class="qb-msg-avatar user">${avatarIcon}</div>` : ""}
+                </div>
+            `;
+        })
+        .join("");
+
+    scrollToBottom();
+}
