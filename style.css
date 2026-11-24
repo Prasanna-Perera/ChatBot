@@ -243,4 +243,7 @@ body {
 #txtUserInput {
     color: var(--qb-text);
 }
+#txtUserInput::placeholder {
+    color: var(--qb-muted);
+}
 
