@@ -217,4 +217,9 @@ body {
     background-color: var(--qb-surface);
     border: 1px solid var(--qb-border);
 }
+.qb-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+}
 
