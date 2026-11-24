@@ -257,3 +257,8 @@ function updateThemeIcons() {
     if (mIcon) mIcon.className = iconClass;
 }
 
+function toggleTheme() {
+    document.body.classList.toggle("dark-mode");
+    updateThemeIcons();
+}
+
