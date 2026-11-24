@@ -26,21 +26,25 @@
                     </button>
                 </div>
 
-                <button type="button" class="btn qb-new-chat-btn w-100 mb-3 py-2 px-3 rounded-3 d-flex align-items-center justify-content-between" onclick="createNewChat()">
+                <button type="button"
+                    class="btn qb-new-chat-btn w-100 mb-3 py-2 px-3 rounded-3 d-flex align-items-center justify-content-between"
+                    onclick="createNewChat()">
                     <span><i class="fa-solid fa-plus me-2"></i>New</span>
                     <kbd class="qb-kbd">Reset</kbd>
                 </button>
 
                 <div class="small text-uppercase fw-semibold qb-section-label px-2 mb-2">Session</div>
                 <div class="qb-session-box p-3 rounded-3 small">
-                    <div class="fw-semibold mb-1"><i class="fa-regular fa-circle-dot text-success me-2"></i>Live Session</div>
+                    <div class="fw-semibold mb-1"><i class="fa-regular fa-circle-dot text-success me-2"></i>Live Session
+                    </div>
                     <div class="qb-muted">Free mode</div>
                 </div>
             </div>
 
             <div class="qb-sidebar-footer pt-3 mt-2 border-top d-flex align-items-center justify-content-between px-1">
                 <div class="d-flex align-items-center gap-2">
-                    <div class="qb-avatar-sm rounded-circle d-flex align-items-center justify-content-center fw-bold">Q</div>
+                    <div class="qb-avatar-sm rounded-circle d-flex align-items-center justify-content-center fw-bold">Q
+                    </div>
                     <div class="small fw-semibold">Quick User</div>
                 </div>
             </div>
@@ -55,26 +59,31 @@
                     <span class="badge qb-pill rounded-pill d-none d-sm-inline-block">Chat & Photo Clean</span>
                 </div>
                 <div class="d-flex align-items-center gap-2">
-                    <button type="button" class="btn btn-sm qb-icon-btn px-2" onclick="toggleApiKeyBox()" title="Set API Key">
+                    <button type="button" class="btn btn-sm qb-icon-btn px-2" onclick="toggleApiKeyBox()"
+                        title="Set API Key">
                         <i class="fa-solid fa-key me-1"></i>API Key
                     </button>
-                    <button type="button" class="btn btn-sm qb-icon-btn d-md-none" onclick="toggleTheme()" title="Toggle Theme">
+                    <button type="button" class="btn btn-sm qb-icon-btn d-md-none" onclick="toggleTheme()"
+                        title="Toggle Theme">
                         <i class="fa-solid fa-sun" id="mobileThemeIcon"></i>
                     </button>
-                    <button type="button" class="btn btn-sm qb-icon-btn d-md-none" onclick="createNewChat()" title="New Chat">
+                    <button type="button" class="btn btn-sm qb-icon-btn d-md-none" onclick="createNewChat()"
+                        title="New Chat">
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
             </header>
 
-            <div class="px-3 px-md-4 py-2 border-bottom" id="apiKeyBar" style="display: none; background-color: var(--qb-surface-2);">
+            <div class="px-3 px-md-4 py-2 border-bottom" id="apiKeyBar"
+                style="display: none; background-color: var(--qb-surface-2);">
                 <div class="qb-chat-inner mx-auto w-100 d-flex align-items-center gap-2">
-                    <input type="password" id="txtRuntimeApiKey" class="form-control form-control-sm" placeholder="Paste Gemini API Key here...">
+                    <input type="password" id="txtRuntimeApiKey" class="form-control form-control-sm"
+                        placeholder="Paste Gemini API Key here...">
                     <button type="button" class="btn btn-sm btn-primary" onclick="saveRuntimeApiKey()">Apply</button>
                 </div>
             </div>
 
-            <div class="qb-chat-scroll flex-grow-1 overflow-auto px-3 px-md-4 py-4 d-flex flex-column justify-content-end" id="chatBox">
+            <div class="qb-chat-scroll flex-grow-1 overflow-auto px-3 px-md-4 py-4" id="chatBox">
                 <div class="qb-chat-inner mx-auto w-100" id="chatWrapper"></div>
             </div>
 
@@ -86,7 +95,8 @@
                             <div class="fw-semibold" id="selectedImageName">photo.png</div>
                             <div class="qb-muted">Type a clean/edit prompt and press Send</div>
                         </div>
-                        <button type="button" class="btn btn-sm text-danger ms-2" onclick="clearSelectedImage()" title="Remove Image">
+                        <button type="button" class="btn btn-sm text-danger ms-2" onclick="clearSelectedImage()"
+                            title="Remove Image">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
@@ -96,12 +106,20 @@
             <footer class="qb-footer px-3 px-md-4 pb-3 pt-2">
                 <div class="qb-chat-inner mx-auto w-100">
                     <div class="qb-input-dock d-flex align-items-center gap-2 rounded-4 px-3 py-2">
-                        <input type="file" id="imageFileInput" accept="image/*" hidden onchange="handleImageSelect(event)">
-                        <button type="button" class="btn qb-attach-btn rounded-circle p-0 d-flex align-items-center justify-content-center" onclick="document.getElementById('imageFileInput').click()" title="Upload Photo to Clean / Edit">
+                        <input type="file" id="imageFileInput" accept="image/*" hidden
+                            onchange="handleImageSelect(event)">
+                        <button type="button"
+                            class="btn qb-attach-btn rounded-circle p-0 d-flex align-items-center justify-content-center"
+                            onclick="document.getElementById('imageFileInput').click()"
+                            title="Upload Photo to Clean / Edit">
                             <i class="fa-regular fa-image"></i>
                         </button>
-                        <input type="text" id="txtUserInput" class="form-control border-0 bg-transparent shadow-none" placeholder="Ask QuickChatBot or describe how to clean/edit your photo..." autocomplete="off">
-                        <button type="button" id="btnSend" class="btn qb-send-btn rounded-circle p-0 d-flex align-items-center justify-content-center" onclick="btnSendMessageOnAction()" title="Send">
+                        <input type="text" id="txtUserInput" class="form-control border-0 bg-transparent shadow-none"
+                            placeholder="Ask QuickChatBot or describe how to clean/edit your photo..."
+                            autocomplete="off">
+                        <button type="button" id="btnSend"
+                            class="btn qb-send-btn rounded-circle p-0 d-flex align-items-center justify-content-center"
+                            onclick="btnSendMessageOnAction()" title="Send">
                             <i class="fa-solid fa-paper-plane"></i>
                         </button>
                     </div>
