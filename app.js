@@ -195,7 +195,7 @@ async function btnSendMessageOnAction() {
                 responseModalities: ["TEXT", "IMAGE"]
             };
         }
-const response = await fetch(endpoint, {
+        const response = await fetch(endpoint, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -206,7 +206,7 @@ const response = await fetch(endpoint, {
 
         const data = await response.json();
         messages.pop();
-if (!response.ok) {
+        if (!response.ok) {
             throw new Error(data?.error?.message || `HTTP ${response.status}`);
         }
 
