@@ -149,4 +149,7 @@ body {
 .qb-chat-inner {
     max-width: 820px;
 }
+.qb-chat-scroll {
+    scroll-behavior: smooth;
+}
 
