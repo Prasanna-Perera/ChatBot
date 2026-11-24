@@ -54,3 +54,21 @@ function createNewChat() {
 function handleImageSelect(event) {
     const file = event.target.files?.[0];
     if (!file) return;
+
+        const reader = new FileReader();
+    reader.onload = () => {
+        const dataUrl = reader.result;
+        const base64 = dataUrl.split(",")[1];
+        selectedImage = {
+            base64,
+            mimeType: file.type || "image/png",
+            dataUrl,
+            name: file.name
+        };
+
+                document.getElementById("selectedImageThumb").src = dataUrl;
+        document.getElementById("selectedImageName").textContent = file.name;
+        document.getElementById("imagePreviewBar").style.display = "block";
+    };
+    reader.readAsDataURL(file);
+}
