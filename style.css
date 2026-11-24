@@ -107,4 +107,11 @@ body {
 .qb-delete-chat-btn:hover {
     opacity: 1;
 }
+.qb-avatar-sm {
+    width: 32px;
+    height: 32px;
+    background-color: #2563eb;
+    color: #fff;
+    font-size: 0.85rem;
+}
 
