@@ -222,4 +222,13 @@ if (!response.ok) {
                 editedImageUrl = `data:${mime};base64,${inline.data}`;
             }
         }
+        if (!replyText && !editedImageUrl) {
+            replyText = "No response received. Please try another prompt.";
+        }
+
+        messages.push({
+            role: "bot",
+            text: replyText || "Here is your edited photo:",
+            imageUrl: editedImageUrl
+        });
 
