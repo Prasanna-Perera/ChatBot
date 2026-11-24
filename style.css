@@ -199,4 +199,12 @@ body {
     border-color: transparent;
     border-bottom-right-radius: 4px;
 }
+.qb-chat-img {
+    max-width: 280px;
+    max-height: 280px;
+    border-radius: 12px;
+    display: block;
+    margin-top: 8px;
+    border: 1px solid var(--qb-border);
+}
 
