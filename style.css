@@ -93,4 +93,8 @@ body {
 .qb-history-item:hover {
     background-color: var(--qb-sidebar-hover);
 }
+.qb-history-item.active {
+    background-color: var(--qb-sidebar-active);
+    color: #ffffff;
+}
 
