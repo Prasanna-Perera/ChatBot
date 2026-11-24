@@ -265,4 +265,8 @@ body {
 .qb-send-btn:disabled {
     opacity: 0.5;
 }
+.qb-disclaimer {
+    font-size: 0.75rem;
+    color: var(--qb-muted);
+}
 
