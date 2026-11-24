@@ -266,4 +266,14 @@ document.addEventListener("DOMContentLoaded", () => {
     updateThemeIcons();
     createNewChat();
 
+    const inputEl = document.getElementById("txtUserInput");
+    if (inputEl) {
+        inputEl.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                btnSendMessageOnAction();
+            }
+        });
+    }
+});
 
