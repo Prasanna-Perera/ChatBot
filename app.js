@@ -130,3 +130,17 @@ function scrollToBottom() {
         });
     }
 }
+
+    const inputEl = document.getElementById("txtUserInput");
+    const sendBtn = document.getElementById("btnSend");
+    const promptText = inputEl.value.trim();
+
+    if (!promptText && !selectedImage) return;
+
+    const apiKey = getActiveApiKey();
+    if (!apiKey) {
+        const bar = document.getElementById("apiKeyBar");
+        if (bar) bar.style.display = "block";
+        document.getElementById("txtRuntimeApiKey")?.focus();
+        return;
+    }
