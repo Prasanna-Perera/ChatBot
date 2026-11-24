@@ -193,4 +193,10 @@ body {
     color: var(--qb-text);
     border-bottom-left-radius: 4px;
 }
+.qb-bubble.user {
+    background-color: var(--qb-user-bubble);
+    color: var(--qb-user-text);
+    border-color: transparent;
+    border-bottom-right-radius: 4px;
+}
 
