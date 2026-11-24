@@ -55,7 +55,7 @@ function handleImageSelect(event) {
     const file = event.target.files?.[0];
     if (!file) return;
 
-        const reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = () => {
         const dataUrl = reader.result;
         const base64 = dataUrl.split(",")[1];
@@ -66,7 +66,7 @@ function handleImageSelect(event) {
             name: file.name
         };
 
-                document.getElementById("selectedImageThumb").src = dataUrl;
+        document.getElementById("selectedImageThumb").src = dataUrl;
         document.getElementById("selectedImageName").textContent = file.name;
         document.getElementById("imagePreviewBar").style.display = "block";
     };
@@ -148,7 +148,7 @@ async function btnSendMessageOnAction() {
         return;
     }
 
- const attachedImg = selectedImage;
+    const attachedImg = selectedImage;
     const finalPrompt = promptText || "Clean and enhance this photo neatly.";
 
     messages.push({
@@ -157,7 +157,7 @@ async function btnSendMessageOnAction() {
         imageUrl: attachedImg ? attachedImg.dataUrl : null
     });
 
-        inputEl.value = "";
+    inputEl.value = "";
     clearSelectedImage();
     renderMessages();
 
@@ -186,4 +186,13 @@ async function btnSendMessageOnAction() {
             });
         }
         parts.push({ text: finalPrompt });
+        const bodyPayload = {
+            contents: [{ parts }]
+        };
+
+        if (isImageTask) {
+            bodyPayload.generationConfig = {
+                responseModalities: ["TEXT", "IMAGE"]
+            };
+        }
 
