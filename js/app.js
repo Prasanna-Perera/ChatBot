@@ -196,16 +196,33 @@ async function btnSendMessageOnAction() {
             };
         }
 
-        const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "x-goog-api-key": apiKey
-            },
-            body: JSON.stringify(bodyPayload)
-        });
+        let response;
+        let data;
+        const maxRetries = 2;
 
-        const data = await response.json();
+        for (let attempt = 0; attempt <= maxRetries; attempt++) {
+            response = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-goog-api-key": apiKey
+                },
+                body: JSON.stringify(bodyPayload)
+            });
+
+            data = await response.json();
+
+            const isHighDemand =
+                response.status === 503 ||
+                /high demand|overloaded|unavailable/i.test(data?.error?.message || "");
+
+            if (response.ok || !isHighDemand || attempt === maxRetries) {
+                break;
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, 1500 * (attempt + 1)));
+        }
+
         messages.pop();
 
         if (!response.ok) {
