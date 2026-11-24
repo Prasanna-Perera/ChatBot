@@ -120,4 +120,8 @@ body {
 .qb-main {
     background-color: var(--qb-bg);
 }
+.qb-topbar {
+    background-color: var(--qb-surface);
+    border-color: var(--qb-border) !important;
+}
 
