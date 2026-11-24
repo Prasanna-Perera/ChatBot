@@ -35,3 +35,11 @@ function escapeHTML(str = "") {
     div.textContent = str;
     return div.innerHTML;
 }
+
+function getWelcomeMessage() {
+    return {
+        role: "bot",
+        text: "Hello! I'm **QuickChatBot**. Ask me anything or upload a photo to clean or edit it.",
+        imageUrl: null
+    };
+}
