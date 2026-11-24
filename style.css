@@ -142,4 +142,8 @@ body {
     border: 1px solid var(--qb-border);
     border-radius: 10px;
 }
+.qb-sidebar .qb-icon-btn {
+    color: #e2e8f0;
+    border-color: rgba(255, 255, 255, 0.12);
+}
 
