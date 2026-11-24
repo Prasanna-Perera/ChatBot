@@ -43,3 +43,10 @@ function getWelcomeMessage() {
         imageUrl: null
     };
 }
+
+function createNewChat() {
+    messages = [getWelcomeMessage()];
+    clearSelectedImage();
+    renderMessages();
+    document.getElementById("txtUserInput")?.focus();
+}
