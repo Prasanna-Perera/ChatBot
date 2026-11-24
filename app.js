@@ -148,7 +148,7 @@ async function btnSendMessageOnAction() {
         return;
     }
 
-    const attachedImg = selectedImage;
+ const attachedImg = selectedImage;
     const finalPrompt = promptText || "Clean and enhance this photo neatly.";
 
     messages.push({
