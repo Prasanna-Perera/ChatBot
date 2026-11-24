@@ -121,3 +121,12 @@ function renderMessages() {
 
     scrollToBottom();
 }
+
+function scrollToBottom() {
+    const box = document.getElementById("chatBox");
+    if (box) {
+        requestAnimationFrame(() => {
+            box.scrollTop = box.scrollHeight;
+        });
+    }
+}
