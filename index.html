@@ -37,7 +37,7 @@
                 <div class="qb-session-box p-3 rounded-3 small">
                     <div class="fw-semibold mb-1"><i class="fa-regular fa-circle-dot text-success me-2"></i>Live Session
                     </div>
-                    <div class="qb-muted">Free mode</div>
+                    <div class="qb-muted">Free mode • Gemini 3.8 Flash</div>
                 </div>
             </div>
 
@@ -56,7 +56,7 @@
                 <div class="d-flex align-items-center gap-2">
                     <span class="qb-status-dot"></span>
                     <h5 class="m-0 fw-bold">QuickChatBot</h5>
-                    <span class="badge qb-pill rounded-pill d-none d-sm-inline-block">Chat & Photo Clean</span>
+                    <span class="badge qb-pill rounded-pill d-none d-sm-inline-block">Chat (Free)</span>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <button type="button" class="btn btn-sm qb-icon-btn px-2" onclick="toggleApiKeyBox()"
@@ -93,7 +93,7 @@
                         <img id="selectedImageThumb" src="" alt="Selected preview" class="qb-thumb rounded-2">
                         <div class="small">
                             <div class="fw-semibold" id="selectedImageName">photo.png</div>
-                            <div class="qb-muted">Type a clean/edit prompt and press Send</div>
+                            <div class="qb-muted">Type a question about the photo and press Send</div>
                         </div>
                         <button type="button" class="btn btn-sm text-danger ms-2" onclick="clearSelectedImage()"
                             title="Remove Image">
@@ -111,11 +111,11 @@
                         <button type="button"
                             class="btn qb-attach-btn rounded-circle p-0 d-flex align-items-center justify-content-center"
                             onclick="document.getElementById('imageFileInput').click()"
-                            title="Upload Photo to Clean / Edit">
+                            title="Attach Photo">
                             <i class="fa-regular fa-image"></i>
                         </button>
                         <input type="text" id="txtUserInput" class="form-control border-0 bg-transparent shadow-none"
-                            placeholder="Ask QuickChatBot or describe how to clean/edit your photo..."
+                            placeholder="Ask QuickChatBot anything..."
                             autocomplete="off">
                         <button type="button" id="btnSend"
                             class="btn qb-send-btn rounded-circle p-0 d-flex align-items-center justify-content-center"
@@ -124,7 +124,7 @@
                         </button>
                     </div>
                     <div class="text-center qb-disclaimer mt-2">
-                        QuickChatBot • PRAZA_BOY • Photo cleaning/editing enabled
+                        QuickChatBot • PRAZA_BOY • Gemini 3.8 Flash Free Chat
                     </div>
                 </div>
             </footer>
