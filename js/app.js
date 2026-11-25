@@ -373,7 +373,7 @@ async function btnSendMessageOnAction() {
         messages.pop();
         messages.push({
             role: "bot",
-            text: `**Error:** ${err.message}\n\n*(Tip: Google AI Studio වෙතින් ගත් \`AIzaSy...\` API Key එක \`config.js\` හෝ ඉහළ **API Key** බොත්තම හරහා ඇතුළත් කර ඇත්දැයි පරීක්ෂා කරන්න.)*`,
+            text: `**Error:** ${err.message}\n\n*(Tip: Google AI Studio\`AIzaSy...\` API Key  \`config.js\` or top **API Key** check.)*`,
             imageUrl: null
         });
         renderMessages();
