@@ -1,0 +1,329 @@
+:root {
+    --qb-bg: #f5f7fb;
+    --qb-surface: #ffffff;
+    --qb-surface-2: #eef2f7;
+    --qb-sidebar: #111827;
+    --qb-sidebar-hover: #1f2937;
+    --qb-sidebar-active: #2563eb;
+    --qb-text: #0f172a;
+    --qb-muted: #64748b;
+    --qb-border: #e2e8f0;
+    --qb-user-bubble: #2563eb;
+    --qb-user-text: #ffffff;
+    --qb-bot-bubble: #ffffff;
+    --qb-accent: #10b981;
+}
+
+body.dark-mode {
+    --qb-bg: #0b0f17;
+    --qb-surface: #131a26;
+    --qb-surface-2: #1c2536;
+    --qb-sidebar: #090d14;
+    --qb-sidebar-hover: #151e2e;
+    --qb-sidebar-active: #2563eb;
+    --qb-text: #f1f5f9;
+    --qb-muted: #94a3b8;
+    --qb-border: #1e293b;
+    --qb-user-bubble: #2563eb;
+    --qb-user-text: #ffffff;
+    --qb-bot-bubble: #131a26;
+    --qb-accent: #10b981;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--qb-bg);
+    color: var(--qb-text);
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.qb-sidebar {
+    width: 280px;
+    min-width: 280px;
+    background-color: var(--qb-sidebar);
+    color: #f8fafc;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.qb-logo-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #10b981);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qb-new-chat-btn {
+    background-color: var(--qb-sidebar-hover);
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+}
+
+.qb-new-chat-btn:hover {
+    background-color: #24324a;
+    color: #fff;
+}
+
+.qb-kbd {
+    font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 6px;
+    border-radius: 6px;
+    color: #cbd5e1;
+}
+
+.qb-section-label {
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+}
+
+.qb-session-box {
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.qb-history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: #cbd5e1;
+    cursor: pointer;
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.qb-history-item:hover {
+    background-color: var(--qb-sidebar-hover);
+}
+
+.qb-history-item.active {
+    background-color: var(--qb-sidebar-active);
+    color: #ffffff;
+}
+
+.qb-delete-chat-btn {
+    background: transparent;
+    border: none;
+    color: inherit;
+    opacity: 0.7;
+    padding: 2px 6px;
+}
+
+.qb-delete-chat-btn:hover {
+    opacity: 1;
+}
+
+.qb-avatar-sm {
+    width: 32px;
+    height: 32px;
+    background-color: #2563eb;
+    color: #fff;
+    font-size: 0.85rem;
+}
+
+.qb-sidebar-footer {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.qb-main {
+    background-color: var(--qb-bg);
+}
+
+.qb-topbar {
+    background-color: var(--qb-surface);
+    border-color: var(--qb-border) !important;
+}
+
+.qb-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--qb-accent);
+    display: inline-block;
+}
+
+.qb-pill {
+    background-color: var(--qb-surface-2);
+    color: var(--qb-text);
+    border: 1px solid var(--qb-border);
+    font-weight: 500;
+}
+
+.qb-icon-btn {
+    color: var(--qb-muted);
+    border: 1px solid var(--qb-border);
+    border-radius: 10px;
+}
+
+.qb-sidebar .qb-icon-btn {
+    color: #e2e8f0;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.qb-chat-inner {
+    max-width: 820px;
+}
+
+.qb-chat-scroll {
+    scroll-behavior: smooth;
+}
+
+.qb-msg-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    animation: qbFadeUp 0.22s ease;
+}
+
+.qb-msg-row.user {
+    justify-content: flex-end;
+}
+
+.qb-msg-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+}
+
+.qb-msg-avatar.bot {
+    background-color: var(--qb-accent);
+    color: #fff;
+}
+
+.qb-msg-avatar.user {
+    background-color: var(--qb-user-bubble);
+    color: var(--qb-user-text);
+}
+
+.qb-bubble {
+    max-width: 78%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 0.94rem;
+    line-height: 1.6;
+    word-break: break-word;
+    border: 1px solid var(--qb-border);
+}
+
+.qb-bubble.bot {
+    background-color: var(--qb-bot-bubble);
+    color: var(--qb-text);
+    border-bottom-left-radius: 4px;
+}
+
+.qb-bubble.user {
+    background-color: var(--qb-user-bubble);
+    color: var(--qb-user-text);
+    border-color: transparent;
+    border-bottom-right-radius: 4px;
+}
+
+.qb-chat-img {
+    max-width: 280px;
+    max-height: 280px;
+    border-radius: 12px;
+    display: block;
+    margin-top: 8px;
+    border: 1px solid var(--qb-border);
+}
+
+.qb-download-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.82rem;
+    text-decoration: none;
+}
+
+.qb-preview-card {
+    background-color: var(--qb-surface);
+    border: 1px solid var(--qb-border);
+}
+
+.qb-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+}
+
+.qb-muted {
+    color: var(--qb-muted);
+    font-size: 0.78rem;
+}
+
+.qb-footer {
+    background-color: var(--qb-bg);
+}
+
+.qb-input-dock {
+    background-color: var(--qb-surface);
+    border: 1px solid var(--qb-border);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.qb-input-dock:focus-within {
+    border-color: var(--qb-sidebar-active);
+}
+
+#txtUserInput {
+    color: var(--qb-text);
+}
+
+#txtUserInput::placeholder {
+    color: var(--qb-muted);
+}
+
+.qb-attach-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background-color: var(--qb-surface-2);
+    color: var(--qb-text);
+    border: none;
+}
+
+.qb-send-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background-color: var(--qb-sidebar-active);
+    color: #fff;
+    border: none;
+}
+
+.qb-send-btn:disabled {
+    opacity: 0.5;
+}
+
+.qb-disclaimer {
+    font-size: 0.75rem;
+    color: var(--qb-muted);
+}
+
+@keyframes qbFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
