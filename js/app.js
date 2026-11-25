@@ -1,5 +1,6 @@
-const TEXT_MODEL = "gemini-3.8-flash";
+const TEXT_MODEL = "gemini-3.5-flash-lite";
 const IMAGE_EDIT_MODEL = "gemini-2.5-flash-image";
+const NANO_IMAGE_MODEL = "gemini-nano-banana-2.1";
 
 let messages = [];
 let selectedImage = null;
@@ -130,11 +131,131 @@ function scrollToBottom() {
     }
 }
 
+// Nano image generation handler
+async function generateNanoImage() {
+    if (isBusy) return;
+
+    const inputEl = document.getElementById("txtUserInput");
+    const nanoBtn = document.getElementById("btnNanoGenerate");
+    const sendBtn = document.getElementById("btnSend");
+    const promptText = inputEl?.value.trim() || "";
+
+    const apiKey = getActiveApiKey();
+    if (!apiKey) {
+        const bar = document.getElementById("apiKeyBar");
+        if (bar) bar.style.display = "block";
+        document.getElementById("txtRuntimeApiKey")?.focus();
+        return;
+    }
+
+    const attachedImg = selectedImage;
+    const finalPrompt =
+        promptText ||
+        (attachedImg
+            ? "Clean and enhance this photo neatly."
+            : "A clean modern futuristic robot sitting on a desk, high detail");
+
+    messages.push({
+        role: "user",
+        text: attachedImg ? `[Nano Edit] ${finalPrompt}` : `[Nano Generate] ${finalPrompt}`,
+        imageUrl: attachedImg ? attachedImg.dataUrl : null
+    });
+
+    if (inputEl) inputEl.value = "";
+    clearSelectedImage();
+    renderMessages();
+
+    isBusy = true;
+    if (nanoBtn) nanoBtn.disabled = true;
+    if (sendBtn) sendBtn.disabled = true;
+
+    messages.push({
+        role: "bot",
+        text: "Generating image with Nano Banana...",
+        imageUrl: null
+    });
+    renderMessages();
+
+    try {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${NANO_IMAGE_MODEL}:generateContent`;
+
+        const parts = [];
+        if (attachedImg) {
+            parts.push({
+                inlineData: {
+                    mimeType: attachedImg.mimeType,
+                    data: attachedImg.base64
+                }
+            });
+        }
+        parts.push({ text: finalPrompt });
+
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-goog-api-key": apiKey
+            },
+            body: JSON.stringify({
+                contents: [{ parts }],
+                generationConfig: {
+                    responseModalities: ["TEXT", "IMAGE"]
+                }
+            })
+        });
+
+        const data = await response.json();
+        messages.pop();
+
+        if (!response.ok) {
+            throw new Error(data?.error?.message || `HTTP ${response.status}`);
+        }
+
+        const responseParts = data?.candidates?.[0]?.content?.parts || [];
+        let replyText = "";
+        let generatedImageUrl = null;
+
+        for (const p of responseParts) {
+            if (p.text) replyText += p.text;
+            const inline = p.inlineData || p.inline_data;
+            if (inline && inline.data) {
+                const mime = inline.mimeType || inline.mime_type || "image/png";
+                generatedImageUrl = `data:${mime};base64,${inline.data}`;
+            }
+        }
+
+        if (!generatedImageUrl) {
+            throw new Error(replyText || "No image returned by the model.");
+        }
+
+        messages.push({
+            role: "bot",
+            text: replyText || "Here is your Nano generated image:",
+            imageUrl: generatedImageUrl
+        });
+        renderMessages();
+    } catch (err) {
+        messages.pop();
+        messages.push({
+            role: "bot",
+            text: `**Nano Image Error:** ${err.message}`,
+            imageUrl: null
+        });
+        renderMessages();
+    } finally {
+        isBusy = false;
+        if (nanoBtn) nanoBtn.disabled = false;
+        if (sendBtn) sendBtn.disabled = false;
+        inputEl?.focus();
+    }
+}
+
 async function btnSendMessageOnAction() {
     if (isBusy) return;
 
     const inputEl = document.getElementById("txtUserInput");
     const sendBtn = document.getElementById("btnSend");
+    const nanoBtn = document.getElementById("btnNanoGenerate");
     const promptText = inputEl.value.trim();
 
     if (!promptText && !selectedImage) return;
@@ -164,6 +285,7 @@ async function btnSendMessageOnAction() {
 
     isBusy = true;
     if (sendBtn) sendBtn.disabled = true;
+    if (nanoBtn) nanoBtn.disabled = true;
 
     messages.push({
         role: "bot",
@@ -258,6 +380,7 @@ async function btnSendMessageOnAction() {
     } finally {
         isBusy = false;
         if (sendBtn) sendBtn.disabled = false;
+        if (nanoBtn) nanoBtn.disabled = false;
         inputEl.focus();
     }
 }
