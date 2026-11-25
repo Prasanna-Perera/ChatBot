@@ -1,5 +1,5 @@
 const TEXT_MODEL = "gemini-3.8-flash";
-// const IMAGE_EDIT_MODEL = "gemini-2.5-flash-image";
+const IMAGE_EDIT_MODEL = "gemini-2.5-flash-image";
 
 let messages = [];
 let selectedImage = null;
@@ -39,7 +39,7 @@ function escapeHTML(str = "") {
 function getWelcomeMessage() {
     return {
         role: "bot",
-        text: "Hello! I'm **QuickChatBot**. Ask me anything or upload a photo to clean or edit it.",
+        text: "Hello! I'm **QuickChatBot** powered by **Gemini 3.8 Flash**. Ask me anything in chat, or attach a photo.",
         imageUrl: null
     };
 }
@@ -148,7 +148,9 @@ async function btnSendMessageOnAction() {
     }
 
     const attachedImg = selectedImage;
-    const finalPrompt = promptText || "Clean and enhance this photo neatly.";
+    const finalPrompt = attachedImg
+        ? (promptText || "Analyze this photo and explain what is in it or how it can be improved.")
+        : promptText;
 
     messages.push({
         role: "user",
@@ -165,14 +167,13 @@ async function btnSendMessageOnAction() {
 
     messages.push({
         role: "bot",
-        text: attachedImg ? "Cleaning/editing your photo..." : "QuickChatBot is thinking...",
+        text: attachedImg ? "Analyzing your photo with Gemini 3.8 Flash..." : "QuickChatBot is thinking...",
         imageUrl: null
     });
     renderMessages();
 
     try {
-        const isImageTask = Boolean(attachedImg);
-        const modelToUse = isImageTask ? IMAGE_EDIT_MODEL : TEXT_MODEL;
+        const modelToUse = TEXT_MODEL;
         const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelToUse}:generateContent`;
 
         const parts = [];
@@ -190,15 +191,9 @@ async function btnSendMessageOnAction() {
             contents: [{ parts }]
         };
 
-        if (isImageTask) {
-            bodyPayload.generationConfig = {
-                responseModalities: ["TEXT", "IMAGE"]
-            };
-        }
-
         let response;
         let data;
-        const maxRetries = 2;
+        const maxRetries = 0;
 
         for (let attempt = 0; attempt <= maxRetries; attempt++) {
             response = await fetch(endpoint, {
@@ -248,7 +243,7 @@ async function btnSendMessageOnAction() {
 
         messages.push({
             role: "bot",
-            text: replyText || "Here is your edited photo:",
+            text: replyText || "Here is your response:",
             imageUrl: editedImageUrl
         });
         renderMessages();
@@ -256,7 +251,7 @@ async function btnSendMessageOnAction() {
         messages.pop();
         messages.push({
             role: "bot",
-            text: `**Error:** ${err.message}`,
+            text: `**Error:** ${err.message}\n\n*(Tip: Google AI Studio වෙතින් ගත් \`AIzaSy...\` API Key එක \`config.js\` හෝ ඉහළ **API Key** බොත්තම හරහා ඇතුළත් කර ඇත්දැයි පරීක්ෂා කරන්න.)*`,
             imageUrl: null
         });
         renderMessages();
