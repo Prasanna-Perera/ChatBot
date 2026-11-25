@@ -1,5 +1,5 @@
 const TEXT_MODEL = "gemini-3.8-flash";
-const IMAGE_EDIT_MODEL = "gemini-2.5-flash-image";
+// const IMAGE_EDIT_MODEL = "gemini-2.5-flash-image";
 
 let messages = [];
 let selectedImage = null;
